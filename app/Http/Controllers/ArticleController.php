@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 
 class ArticleController extends Controller
 {
@@ -12,5 +13,11 @@ class ArticleController extends Controller
         $articles = Article::paginate();
 
         return view('article.index', compact('articles'));
+    }
+
+    public function show($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('article.show', compact('article'));
     }
 }
