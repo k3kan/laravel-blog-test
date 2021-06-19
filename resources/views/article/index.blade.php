@@ -1,4 +1,6 @@
 @extends('layouts.app')
+<h1>{{Session::get('create')}}</h1>
+<h1>{{Session::get('update')}}</h1>
 
 @section('content')
     <h1>Список статей</h1>

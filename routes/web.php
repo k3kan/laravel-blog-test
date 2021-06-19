@@ -28,3 +28,7 @@ Route::get('articles/create', [ArticleController::class, 'create'])->name('artic
 Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
 
 Route::get('articles/{id}', [ArticleController::class, 'show'])->name('article.show');
+
+Route::get('articles/{id}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+
+Route::patch('articles/{id}', [ArticleController::class, 'update'])->name('articles.update');

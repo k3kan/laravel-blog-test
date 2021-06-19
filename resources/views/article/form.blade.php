@@ -8,8 +8,7 @@
     </div>
 @endif
 
-
-{{ Form::model($article, ['url' => route('articles.store')]) }}
-    @include('article.form')
-    {{ Form::submit('Создать') }}
-{{ Form::close() }}
+{{ Form::label('name', 'Название') }}
+{{ Form::text('name') }}<br>
+{{ Form::label('body', 'Содержание') }}
+{{ Form::textarea('body') }}<br>

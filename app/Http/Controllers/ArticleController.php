@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -21,16 +22,15 @@ class ArticleController extends Controller
         return view('article.create', compact('article'));
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:articles',
-            'body' => 'required|min:10',
-        ]);
+        $data = $request->validated();
 
         $article = new Article();
         $article->fill($data);
         $article->save();
+
+        $request->session()->flash('create', 'Article was created!');
 
         return redirect()->route('articles.index');
     }
@@ -39,5 +39,27 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
         return view('article.show', compact('article'));
+    }
+
+    public function edit($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('article.edit', compact('article'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        $data = $this->validate($request, [
+            'name' => 'required|unique:articles,name,' . $article->id,
+            'body' => 'required|min:1',
+        ]);
+
+        $article->fill($data);
+        $article->save();
+
+        $request->session()->flash('update', 'Task was successful!');
+
+        return redirect()->route('articles.index');
     }
 }
